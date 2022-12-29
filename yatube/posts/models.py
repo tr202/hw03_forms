@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.template.defaultfilters import truncatechars
 
 from .validators import post_text_validator as ptv
 
@@ -42,10 +43,10 @@ class Post(models.Model):
         verbose_name='Сообщество',
     )
 
-    def __str__(self):
-        return self.text
-
     class Meta:
         verbose_name = 'cтатью'
         verbose_name_plural = 'Статьи'
         ordering = ('-pub_date',)
+
+    def __str__(self):
+        return truncatechars(self.text, 30)
